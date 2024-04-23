@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	sharedRouter "github.com/quinntas/visage/api/shared/infra/router"
 	"net"
 	"os"
 )
@@ -92,6 +93,10 @@ func handleRequest(conn net.Conn) {
 		length,
 		content,
 	)
+
+	a := sharedRouter.Create()
+
+	fmt.Println(string(a[0].Impls[0].Call(message.content)))
 
 	fmt.Println("Version:", message.version)
 	fmt.Println("Command:", message.command)
