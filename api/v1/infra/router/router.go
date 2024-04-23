@@ -1,20 +1,20 @@
 package v1Router
 
 import (
-	"github.com/quinntas/visage/api/shared/sharedVersions"
-	v1PublishUseCase "github.com/quinntas/visage/api/v1/useCases/publish"
-	"github.com/quinntas/visage/internal/protocol"
+	"github.com/quinntas/visage/api/shared/versions"
+	v1Publish "github.com/quinntas/visage/api/v1/implementations/publish"
+	"github.com/quinntas/visage/internal/api"
 )
 
 const (
 	PUBLISH = iota
 )
 
-func Create() protocol.VersionRouter {
-	return protocol.NewVersionRouter(
-		sharedVersions.V1,
-		map[int8]protocol.Impl{
-			PUBLISH: v1PublishUseCase.NewPublishUseCase(),
+func Create() api.VersionRouter {
+	return api.NewVersionRouter(
+		versions.V1,
+		map[uint8]api.Impl{
+			PUBLISH: v1Publish.NewPublish(),
 		},
 	)
 }

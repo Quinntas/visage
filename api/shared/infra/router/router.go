@@ -1,13 +1,22 @@
 package sharedRouter
 
 import (
-	"github.com/quinntas/visage/api/shared/sharedVersions"
+	"context"
+	"github.com/quinntas/visage/api/shared/versions"
 	v1Router "github.com/quinntas/visage/api/v1/infra/router"
-	"github.com/quinntas/visage/internal/protocol"
+	"github.com/quinntas/visage/internal/api"
 )
 
-func Create() map[int8]protocol.VersionRouter {
-	return map[int8]protocol.VersionRouter{
-		sharedVersions.V1: v1Router.Create(),
+func Create() map[uint8]api.VersionRouter {
+	return map[uint8]api.VersionRouter{
+		versions.V1: v1Router.Create(),
 	}
+}
+
+func CreateWithContext(ctx context.Context) context.Context {
+	return context.WithValue(
+		ctx,
+		api.ROUTERS_CTX_KEY,
+		Create(),
+	)
 }
