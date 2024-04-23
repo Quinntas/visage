@@ -1,4 +1,4 @@
-package reponses
+package responses
 
 func ByteResponse(payload []byte) []byte {
 	return payload
