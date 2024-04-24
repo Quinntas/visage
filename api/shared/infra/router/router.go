@@ -7,8 +7,8 @@ import (
 	"github.com/quinntas/visage/internal/api"
 )
 
-func Create() map[uint8]api.VersionRouter {
-	return map[uint8]api.VersionRouter{
+func Create() api.RouterMap {
+	return api.RouterMap{
 		versions.V1: v1Router.Create(),
 	}
 }

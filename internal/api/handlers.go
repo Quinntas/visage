@@ -26,7 +26,7 @@ func handleRequest(header []byte, conn net.Conn, ctx context.Context) error {
 		content,
 	)
 
-	res := ctx.Value(ROUTERS_CTX_KEY).(map[uint8]VersionRouter)[protocol.Version].
+	res := ctx.Value(ROUTERS_CTX_KEY).(RouterMap)[protocol.Version].
 		Impls[protocol.Command].
 		Call(content)
 

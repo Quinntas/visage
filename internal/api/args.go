@@ -10,7 +10,7 @@ func (a *Args) Addr() string {
 }
 
 const (
-	DEFAULT_HOST = "LOCAHOST"
+	DEFAULT_HOST = "localhost"
 	DEFAULT_PORT = "6969"
 )
 
