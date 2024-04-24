@@ -9,3 +9,7 @@ func ByteResponse(payload []byte) []byte {
 func Ok() []byte {
 	return ByteResponse([]byte("Ok"))
 }
+
+func ErrorResponse(err error) []byte {
+	return ByteResponse([]byte(err.Error()))
+}

@@ -1,5 +1,5 @@
 package api
 
 type Impl interface {
-	Call(payload []byte) []byte
+	Call(payload *[]byte) []byte
 }

@@ -29,7 +29,7 @@ func handleRequest(header []byte, conn net.Conn, ctx context.Context) error {
 
 	res := ctx.Value(ROUTERS_CTX_KEY).(RouterMap)[protocol.Version].
 		Impls[protocol.Command].
-		Call(content)
+		Call(&content)
 
 	_, err := conn.Write(res)
 	if err != nil {

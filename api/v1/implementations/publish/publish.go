@@ -2,6 +2,7 @@ package v1Publish
 
 import (
 	"fmt"
+	pubsubProtocol "github.com/quinntas/visage/api/v1/protocols/pubsub"
 	"github.com/quinntas/visage/internal/api/responses"
 )
 
@@ -12,15 +13,14 @@ func NewPublish() *Publish {
 	return &Publish{}
 }
 
-// TODO: use the module to parse byte arr
-func (p *Publish) Call(content []byte) []byte {
-	contentChannelLength := uint16(content[0])<<8 | uint16(content[1])
-	contentPayloadLength := uint16(content[2])<<8 | uint16(content[3])
+func (p *Publish) Call(content *[]byte) []byte {
+	channel, payload, err := pubsubProtocol.ParseContent(content)
+	if err != nil {
+		return responses.ErrorResponse(err)
+	}
 
-	startIndex := 4 + contentChannelLength
-
-	fmt.Println(contentChannelLength, string(content[:startIndex]))
-	fmt.Println(contentPayloadLength, string(content[startIndex:contentPayloadLength+startIndex]))
+	fmt.Println(channel)
+	fmt.Println(payload)
 
 	return responses.Ok()
 }
