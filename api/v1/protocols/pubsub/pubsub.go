@@ -19,28 +19,28 @@ func ParseContentHeader(contentHeader []byte) (uint16, uint16, error) {
 	return contentHeaderChannelLength, contentHeaderPayloadLength, nil
 }
 
-func ParseContent(content *[]byte) (string, string, error) {
+func ParseContent(content *[]byte) ([]byte, []byte, error) {
 	contentHeader, err := byteUtils.ReadByteArr(0, CONTENT_HEADER_LENGTH, content)
 	if err != nil {
-		return "", "", err
+		return nil, nil, err
 	}
 
 	contentHeaderChannelLength, contentHeaderPayloadLength, err := ParseContentHeader(contentHeader)
 	if err != nil {
-		return "", "", err
+		return nil, nil, err
 	}
 
 	startChannelIndex := CONTENT_HEADER_LENGTH + int(contentHeaderChannelLength)
 	channel, err := byteUtils.ReadByteArr(0, startChannelIndex, content)
 	if err != nil {
-		return "", "", err
+		return nil, nil, err
 	}
 
 	endPayloadIndex := int(contentHeaderPayloadLength) + startChannelIndex
 	payload, err := byteUtils.ReadByteArr(startChannelIndex, endPayloadIndex, content)
 	if err != nil {
-		return "", "", err
+		return nil, nil, err
 	}
 
-	return string(channel), string(payload), nil
+	return channel, payload, nil
 }

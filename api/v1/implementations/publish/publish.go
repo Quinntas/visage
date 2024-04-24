@@ -19,8 +19,8 @@ func (p *Publish) Call(content *[]byte) []byte {
 		return responses.ErrorResponse(err)
 	}
 
-	fmt.Println(channel)
-	fmt.Println(payload)
+	fmt.Println(string(channel))
+	fmt.Println(string(payload))
 
 	return responses.Ok()
 }

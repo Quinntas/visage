@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"fmt"
+	"github.com/quinntas/visage/utils/timeUtils"
 	"net"
 )
 
@@ -42,6 +43,7 @@ func handleRequest(header []byte, conn net.Conn, ctx context.Context) error {
 // TODO: shitty code
 func HandleConnectedClient(conn net.Conn, ctx context.Context) {
 	defer conn.Close()
+	defer timeUtils.Timer("Handler timmer test")()
 
 	header := make([]byte, 4)
 	_, err := conn.Read(header)
