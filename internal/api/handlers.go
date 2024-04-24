@@ -6,6 +6,7 @@ import (
 	"net"
 )
 
+// TODO: buf overflow and shit + module for parsing byte arr
 func handleRequest(header []byte, conn net.Conn, ctx context.Context) error {
 	length := uint16(header[2])<<8 | uint16(header[3])
 
@@ -38,6 +39,7 @@ func handleRequest(header []byte, conn net.Conn, ctx context.Context) error {
 	return nil
 }
 
+// TODO: shitty code
 func HandleConnectedClient(conn net.Conn, ctx context.Context) {
 	defer conn.Close()
 

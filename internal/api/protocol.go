@@ -7,6 +7,7 @@ type Protocol struct {
 	Content []byte
 }
 
+// TODO: add data validations
 func NewProtocol(
 	version uint8,
 	command uint8,

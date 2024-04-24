@@ -7,9 +7,9 @@ import (
 	sharedRouter "github.com/quinntas/visage/api/shared/infra/router"
 	"github.com/quinntas/visage/internal/api"
 	"net"
-	"os"
 )
 
+// TODO: better main func, this sucks
 func main() {
 	hostPtr := flag.String("host", "localhost", "tcp host")
 	portPtr := flag.String("port", "6969", "tcp port")
@@ -18,8 +18,7 @@ func main() {
 
 	l, err := net.Listen("tcp", args.Addr())
 	if err != nil {
-		fmt.Println("Error listening:", err.Error())
-		os.Exit(1)
+		panic(err.Error())
 	}
 
 	defer l.Close()

@@ -12,6 +12,7 @@ func NewPublish() *Publish {
 	return &Publish{}
 }
 
+// TODO: use the module to parse byte arr
 func (p *Publish) Call(content []byte) []byte {
 	contentChannelLength := uint16(content[0])<<8 | uint16(content[1])
 	contentPayloadLength := uint16(content[2])<<8 | uint16(content[3])
