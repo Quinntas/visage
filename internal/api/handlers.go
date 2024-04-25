@@ -2,12 +2,13 @@ package api
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"github.com/quinntas/visage/utils/timeUtils"
 	"net"
 )
 
 // TODO: buf overflow and shit + module for parsing byte arr
+// TODO: receive a result instead of []bytes to not close a connection when .Call() is called :)
 func handleRequest(header []byte, conn net.Conn, ctx context.Context) error {
 	length := uint16(header[2])<<8 | uint16(header[3])
 
@@ -28,10 +29,17 @@ func handleRequest(header []byte, conn net.Conn, ctx context.Context) error {
 		content,
 	)
 
-	res := ctx.Value(ROUTERS_CTX_KEY).(RouterMap)[protocol.Version].
-		Impls[protocol.Command].
-		Call(&content)
+	ver, ok := ctx.Value(ROUTERS_CTX_KEY).(RouterMap)[protocol.Version]
+	if !ok {
+		return errors.New("version not found")
+	}
 
+	com, ok := ver.Impls[protocol.Command]
+	if !ok {
+		return errors.New("command not found")
+	}
+
+	res := com.Call(&protocol.Content, conn)
 	_, err := conn.Write(res)
 	if err != nil {
 		return err
@@ -43,7 +51,6 @@ func handleRequest(header []byte, conn net.Conn, ctx context.Context) error {
 // TODO: shitty code
 func HandleConnectedClient(conn net.Conn, ctx context.Context) {
 	defer conn.Close()
-	defer timeUtils.Timer("Handler timmer test")()
 
 	header := make([]byte, 4)
 	_, err := conn.Read(header)
